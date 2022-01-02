@@ -1,0 +1,17 @@
+:root {
+  box-sizing: border-box;
+}
+
+* {
+  color: inherit;
+  box-sizing: inherit;
+  font-family: inherit;
+}
+
+body {
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+}
