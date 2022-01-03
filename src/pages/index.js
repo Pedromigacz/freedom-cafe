@@ -1,5 +1,6 @@
 import * as React from "react"
 import styled from "styled-components"
+import { Link } from "gatsby"
 
 const Copyright = () => (
   <CopyrightText>
@@ -21,18 +22,26 @@ const HR = () => (
 const IndexPage = () => (
   <Main>
     <Header>
-      <Icon>
-        <b>FC</b>
-      </Icon>
+      <Link to="/">
+        <Icon>
+          <b>FC</b>
+        </Icon>
+      </Link>
       <Title>
         <b>Welcome to Freedom Cafe</b> a decentrilized web chat based on freedom
         & privacy.
       </Title>
     </Header>
-    <Button>Login</Button>
-    <Button>Register</Button>
+    <Link to="/login">
+      <Button>Login</Button>
+    </Link>
+    <Link to="/register">
+      <Button>Register</Button>
+    </Link>
     <HR />
-    <Button>Chat as a guest</Button>
+    <Link to="/chat">
+      <Button>Chat as a guest</Button>
+    </Link>
     <Copyright />
   </Main>
 )
