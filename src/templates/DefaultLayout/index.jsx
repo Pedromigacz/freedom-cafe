@@ -7,7 +7,8 @@ const DefaultLayout = ({ children }) => (
 )
 
 const ContentContainer = styled.div`
-  display: inline-block;
+  display: inline-grid;
+  place-items: center;
   width: 100%;
   min-height: 100vh;
   background: linear-gradient(243.18deg, #4d194d 0%, #006466 100%);
