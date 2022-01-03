@@ -2,14 +2,7 @@ import * as React from "react"
 import styled from "styled-components"
 import { Link } from "gatsby"
 import { Copyright } from "../shared"
-
-const Hr = () => (
-  <HRWrapper>
-    <HorizontalRuler />
-    or
-    <HorizontalRuler />
-  </HRWrapper>
-)
+import Hr from "./Hr.jsx"
 
 const Home = () => (
   <Main>
@@ -101,23 +94,6 @@ const Button = styled.button`
     background: #ffffff;
     color: #222222;
   }
-`
-
-const HRWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  color: #555555;
-  margin: 0.5rem 0 1.5rem 0;
-`
-
-const HorizontalRuler = styled.hr`
-  width: 45%;
-  display: inline-block;
-  border: none;
-  border-bottom: 1px solid #555555;
-  margin: 0;
 `
 
 export default Home
