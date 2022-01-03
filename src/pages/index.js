@@ -93,7 +93,13 @@ const Button = styled.button`
   width: 100%;
   margin-bottom: 1rem;
   padding: 1rem 0;
+  transition: 200ms;
   cursor: pointer;
+
+  &:hover {
+    background: #ffffff;
+    color: #222222;
+  }
 `
 
 const HRWrapper = styled.div`
