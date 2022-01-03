@@ -1,15 +1,7 @@
 import * as React from "react"
 import styled from "styled-components"
 import { Link } from "gatsby"
-
-const Copyright = () => (
-  <CopyrightText>
-    Copyright © 2022{" "}
-    <a href="https://pedromigacz.com" target="_blank" rel="noreferrer">
-      PedroMigacz
-    </a>
-  </CopyrightText>
-)
+import { Copyright } from "../components/shared"
 
 const HR = () => (
   <HRWrapper>
@@ -126,17 +118,6 @@ const HorizontalRuler = styled.hr`
   border: none;
   border-bottom: 1px solid #555555;
   margin: 0;
-`
-
-const CopyrightText = styled.span`
-  margin-top: auto;
-  display: block;
-  text-align: center;
-
-  & a {
-    font-weight: 400;
-    text-decoration: underline;
-  }
 `
 
 export default IndexPage
