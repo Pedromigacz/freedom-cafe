@@ -1,9 +1,12 @@
 import * as React from "react"
 import "./reset.css"
 import styled from "styled-components"
+import GunContextProvider from "./GunContext"
 
 const DefaultLayout = ({ children }) => (
-  <ContentContainer>{children}</ContentContainer>
+  <ContentContainer>
+    <GunContextProvider>{children}</GunContextProvider>
+  </ContentContainer>
 )
 
 const ContentContainer = styled.div`
