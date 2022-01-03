@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import styled from "styled-components"
 import { motion } from "framer-motion"
 
-const FloatingTag = ({ label, value, onChange }) => {
+const FloatingTag = ({ label, value, onChange, type }) => {
   const [focus, setFocus] = useState(false)
   return (
     <InputWrapper>
@@ -13,7 +13,7 @@ const FloatingTag = ({ label, value, onChange }) => {
         {label}
       </Label>
       <Input
-        type="text"
+        type={type || "text"}
         onFocus={e => setFocus(true)}
         onBlur={e => setFocus(false)}
         onChange={onChange}
@@ -22,24 +22,6 @@ const FloatingTag = ({ label, value, onChange }) => {
     </InputWrapper>
   )
 }
-
-// const [labelFocused, setLabelFocused] = useState(false)
-// return (
-//     <span className={styles.inputContainer + ' ' + styles.formRow}>
-//         <motion.label
-//             initial={{ y: 32 }}
-//             animate={{ y: (form[inputKey] || labelFocused) ? 10 : 32 }}
-//         >{label}</motion.label>
-//         <input
-//             onFocus={e => setLabelFocused(true)}
-//             onBlur={e => setLabelFocused(false)}
-//             type="text"
-//             name={inputKey}
-//             onChange={handleChange}
-//             value={form[inputKey]}
-//         />
-//     </span>
-// );
 
 const InputWrapper = styled.span`
   width: 100%;

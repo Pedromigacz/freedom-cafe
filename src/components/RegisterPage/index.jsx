@@ -1,10 +1,31 @@
-import React, { useState } from "react"
+import React, { useState, useContext } from "react"
+import { GunContext } from "../../templates/DefaultLayout/GunContext"
 import { Copyright, FloatingTag } from "../shared"
 import styled from "styled-components"
-import { Link } from "gatsby"
+import { Link, navigate } from "gatsby"
 
 const RegisterPage = () => {
   const [form, setForm] = useState({ name: "", password: "" })
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState("")
+
+  const { signup } = useContext(GunContext)
+
+  const register = e => {
+    e.preventDefault()
+    if (loading) return
+    setLoading(true)
+    signup(form.name, form.password)
+      .then(() => {
+        setLoading(false)
+        navigate("/chat")
+      })
+      .catch(e => {
+        console.log(e)
+        setError(e)
+        setLoading(false)
+      })
+  }
 
   return (
     <Main>
@@ -16,7 +37,7 @@ const RegisterPage = () => {
         </Link>
         <Title>Registration Page</Title>
       </Header>
-      <Form>
+      <Form onSubmit={register}>
         <FloatingTag
           label="Name:"
           value={form.name}
@@ -25,6 +46,7 @@ const RegisterPage = () => {
           }}
         />
         <FloatingTag
+          type="password"
           label="Password:"
           value={form.password}
           onChange={e => {
@@ -34,7 +56,8 @@ const RegisterPage = () => {
         <Disclaimer>
           *Be aware that there's currently no way to recover any lost accounts.
         </Disclaimer>
-        <Button>Register</Button>
+        {error && <Error>{error}</Error>}
+        <Button>{loading ? "Loading..." : "Register"}</Button>
       </Form>
       <Copyright />
     </Main>
@@ -95,6 +118,10 @@ const Form = styled.form`
 const Disclaimer = styled.span`
   display: block;
   margin: 3rem 0 0.5rem 0;
+`
+
+const Error = styled.span`
+  color: #ff1223;
 `
 
 const Button = styled.button`
