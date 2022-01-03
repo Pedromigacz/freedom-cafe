@@ -28,8 +28,7 @@ const GunContextProvider = props => {
     const promise = new Promise((resolve, reject) => {
       user.auth(username, password, ({ err }) => {
         if (err) {
-          // alert(err)
-          reject()
+          reject(err)
         } else {
           resolve()
         }

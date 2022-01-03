@@ -1,10 +1,30 @@
-import React, { useState } from "react"
+import React, { useState, useContext } from "react"
+import { GunContext } from "../../templates/DefaultLayout/GunContext"
 import { Copyright, FloatingTag } from "../shared"
 import styled from "styled-components"
-import { Link } from "gatsby"
+import { Link, navigate } from "gatsby"
 
 const LoginPage = () => {
   const [form, setForm] = useState({ name: "", password: "" })
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState("")
+
+  const { login } = useContext(GunContext)
+
+  const loginFunction = e => {
+    e.preventDefault()
+    if (loading) return
+    setLoading(true)
+    login(form.name, form.password)
+      .then(() => {
+        setLoading(false)
+        navigate("/chat")
+      })
+      .catch(e => {
+        setLoading(false)
+        setError(e)
+      })
+  }
 
   return (
     <Main>
@@ -16,7 +36,7 @@ const LoginPage = () => {
         </Link>
         <Title>Login Page</Title>
       </Header>
-      <Form>
+      <Form onSubmit={loginFunction}>
         <FloatingTag
           label="Name:"
           value={form.name}
@@ -25,16 +45,16 @@ const LoginPage = () => {
           }}
         />
         <FloatingTag
+          type="password"
           label="Password:"
           value={form.password}
           onChange={e => {
             setForm(prev => ({ ...prev, password: e.target.value }))
           }}
         />
-        <Disclaimer>
-          *Be aware that there's currently no way to recover any lost accounts.
-        </Disclaimer>
-        <Button>Login</Button>
+        <Spacer />
+        {error && <Error>{error}</Error>}
+        <Button>{loading ? "Loading..." : "Login"}</Button>
       </Form>
       <Copyright />
     </Main>
@@ -92,9 +112,13 @@ const Form = styled.form`
   width: 100%;
 `
 
-const Disclaimer = styled.span`
-  display: block;
-  margin: 3rem 0 0.5rem 0;
+const Spacer = styled.div`
+  height: 0;
+  margin-top: 2rem;
+`
+
+const Error = styled.span`
+  color: #ff1223;
 `
 
 const Button = styled.button`
