@@ -1,26 +1,45 @@
-import React from "react"
+import React, { useState } from "react"
 import { Copyright, FloatingTag } from "../shared"
 import styled from "styled-components"
 import { Link } from "gatsby"
 
-const RegisterPage = () => (
-  <Main>
-    <Header>
-      <Link to="/">
-        <Icon>
-          <b>FC</b>
-        </Icon>
-      </Link>
-      <Title>Login Page</Title>
-    </Header>
-    <Form>
-      <FloatingTag label="Name" />
-      <FloatingTag label="Password" />
-      <Button>Register</Button>
-    </Form>
-    <Copyright />
-  </Main>
-)
+const RegisterPage = () => {
+  const [form, setForm] = useState({ name: "", password: "" })
+
+  return (
+    <Main>
+      <Header>
+        <Link to="/">
+          <Icon>
+            <b>FC</b>
+          </Icon>
+        </Link>
+        <Title>Registration Page</Title>
+      </Header>
+      <Form>
+        <FloatingTag
+          label="Name:"
+          value={form.name}
+          onChange={e => {
+            setForm(prev => ({ ...prev, name: e.target.value }))
+          }}
+        />
+        <FloatingTag
+          label="Password:"
+          value={form.password}
+          onChange={e => {
+            setForm(prev => ({ ...prev, password: e.target.value }))
+          }}
+        />
+        <Disclaimer>
+          *Be aware that there's currently no way to recover any lost accounts.
+        </Disclaimer>
+        <Button>Register</Button>
+      </Form>
+      <Copyright />
+    </Main>
+  )
+}
 
 const Main = styled.main`
   display: flex;
@@ -73,6 +92,11 @@ const Form = styled.form`
   width: 100%;
 `
 
+const Disclaimer = styled.span`
+  display: block;
+  margin: 3rem 0 0.5rem 0;
+`
+
 const Button = styled.button`
   border: none;
   background: #eeeeee;
@@ -81,7 +105,6 @@ const Button = styled.button`
   font-weight: 700;
   border-radius: 3px;
   width: 100%;
-  margin-top: 4rem;
   padding: 1rem 0;
   transition: 200ms;
   cursor: pointer;

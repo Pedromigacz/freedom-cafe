@@ -1,12 +1,24 @@
 import React, { useState } from "react"
 import styled from "styled-components"
+import { motion } from "framer-motion"
 
-const FloatingTag = ({ label }) => {
+const FloatingTag = ({ label, value, onChange }) => {
   const [focus, setFocus] = useState(false)
   return (
     <InputWrapper>
-      <LabelWrapper>{label}</LabelWrapper>
-      <Input type="text" />
+      <Label
+        initial={{ y: 20, x: 5 }}
+        animate={{ y: value || focus ? 20 : 40, x: value || focus ? 5 : 15 }}
+      >
+        {label}
+      </Label>
+      <Input
+        type="text"
+        onFocus={e => setFocus(true)}
+        onBlur={e => setFocus(false)}
+        onChange={onChange}
+        value={value}
+      />
     </InputWrapper>
   )
 }
@@ -35,8 +47,10 @@ const InputWrapper = styled.span`
   color: #333333;
 `
 
-const LabelWrapper = styled.label`
+const Label = styled(motion.label)`
   display: block;
+  font-weight: 600;
+  pointer-events: none;
 `
 
 const Input = styled.input`
