@@ -20,6 +20,7 @@ const Icon = styled.div`
   text-transform: uppercase;
   margin: 0.5rem;
 `
+
 const MessageWrapper = styled.div`
   padding: 8px;
   display: inline-block;
