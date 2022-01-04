@@ -11,6 +11,7 @@ const ChatComponent = () => {
     e.preventDefault()
     sendMessage(message).then(e => {
       console.log("sent")
+      setMessage("")
     })
   }
 
