@@ -4,7 +4,7 @@ import styled from "styled-components"
 const Message = ({ message, author }) => (
   <div>
     <Icon>{author[0] + author[1]}</Icon>
-    <MessageWrapper>Message</MessageWrapper>
+    <MessageWrapper>{message}</MessageWrapper>
   </div>
 )
 
@@ -27,6 +27,8 @@ const MessageWrapper = styled.div`
   color: #333333;
   font-size: 1rem;
   background: #c4c4c4;
+  max-width: calc(100% - 70px);
+  word-wrap: break-word;
 `
 
 export default Message

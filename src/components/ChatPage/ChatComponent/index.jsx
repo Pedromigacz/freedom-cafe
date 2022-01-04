@@ -1,18 +1,34 @@
-import React, { useState } from "react"
+import React, { useContext, useState } from "react"
+import { GunContext } from "../../../templates/DefaultLayout/GunContext"
 import styled from "styled-components"
 import Message from "./Message.jsx"
 
 const ChatComponent = () => {
-  const [chat, setChat] = useState([])
+  const { sendMessage, messages } = useContext(GunContext)
+  const [message, setMessage] = useState("")
+
+  const onSubmit = e => {
+    e.preventDefault()
+    sendMessage(message).then(e => {
+      console.log("sent")
+    })
+  }
 
   return (
     <ChatWrapper>
       <Chat>
-        <Message message="Some text" author="XJP" />
+        {messages.map((msg, key) => (
+          <Message message={msg.what} author={msg.who} key={key} />
+        ))}
       </Chat>
-      <SendMessageForm>
-        <Input type="text" placeholder="Type a message..." />
-        <SendButton>Send</SendButton>
+      <SendMessageForm onSubmit={onSubmit}>
+        <Input
+          type="text"
+          placeholder="Type a message..."
+          onChange={e => setMessage(e.target.value)}
+          value={message}
+        />
+        <SendButton type="submit">Send</SendButton>
       </SendMessageForm>
     </ChatWrapper>
   )
@@ -28,7 +44,7 @@ const ChatWrapper = styled.div`
   flex-direction: column;
 `
 
-const SendMessageForm = styled.div`
+const SendMessageForm = styled.form`
   width: 100%;
   display: flex;
   height: 90px;
@@ -52,14 +68,18 @@ const SendButton = styled.button`
   font-size: 1.5rem;
   font-weight: bold;
   padding: 0 2rem;
+  cursor: pointer;
 `
 
 // chat
 
 const Chat = styled.div`
-  display: inline-block;
+  display: inline-flex;
+  flex-direction: column;
   width: 100%;
   flex-grow: 1;
+  overflow: auto;
+  max-height: calc(100vh - 450px);
 `
 
 export default ChatComponent
