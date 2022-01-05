@@ -1,7 +1,7 @@
 import React, { useState, createContext } from "react"
 import GUN from "gun"
 import "gun/sea"
-// import "gun/axe"
+import "gun/axe"
 
 export const GunContext = createContext()
 
