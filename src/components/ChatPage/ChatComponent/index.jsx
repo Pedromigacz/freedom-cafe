@@ -12,10 +12,7 @@ const ChatComponent = () => {
   const { user, username } = useContext(GunContext)
 
   const db = GUN({
-    peers: [
-      "https://gun-manhattan.herokuapp.com/gun",
-      "http://localhost:8000/gun",
-    ],
+    peers: [process.env.GATSBY_GUN_URL, "http://localhost:8000/gun"],
   })
 
   const onSubmit = async e => {
