@@ -1,12 +1,18 @@
 import React from "react"
 import styled from "styled-components"
 
-const Message = ({ message, author }) => (
-  <div>
+const Message = ({ message, author = "guest", currentlyUser }) => (
+  <MessageLine self={author === currentlyUser}>
     <Icon>{author[0] + author[1]}</Icon>
     <MessageWrapper>{message}</MessageWrapper>
-  </div>
+  </MessageLine>
 )
+
+const MessageLine = styled.div`
+  display: flex;
+  align-items: baseline;
+  flex-direction: ${props => (props.self ? "row-reverse" : "row")};
+`
 
 const Icon = styled.div`
   display: inline-grid;
