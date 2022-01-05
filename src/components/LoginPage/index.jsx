@@ -2,12 +2,15 @@ import React, { useState, useContext } from "react"
 import { GunContext } from "../../templates/DefaultLayout/GunContext"
 import { Copyright, FloatingTag } from "../shared"
 import styled from "styled-components"
-import { Link, navigate } from "gatsby"
+import { useRouter } from "next/router"
+import Link from "next/link"
 
 const LoginPage = () => {
   const [form, setForm] = useState({ name: "", password: "" })
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
+
+  const router = useRouter()
 
   const { login } = useContext(GunContext)
 
@@ -18,7 +21,7 @@ const LoginPage = () => {
     login(form.name, form.password)
       .then(() => {
         setLoading(false)
-        navigate("/chat")
+        router.push("/chat")
       })
       .catch(e => {
         setLoading(false)
@@ -29,10 +32,12 @@ const LoginPage = () => {
   return (
     <Main>
       <Header>
-        <Link to="/">
-          <Icon>
-            <b>FC</b>
-          </Icon>
+        <Link href="/">
+          <a>
+            <Icon>
+              <b>FC</b>
+            </Icon>
+          </a>
         </Link>
         <Title>Login Page</Title>
       </Header>

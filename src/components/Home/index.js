@@ -1,31 +1,39 @@
 import * as React from "react"
 import styled from "styled-components"
-import { Link } from "gatsby"
+import Link from "next/link"
 import { Copyright } from "../shared"
 import Hr from "./Hr.jsx"
 
 const Home = () => (
   <Main>
     <Header>
-      <Link to="/">
-        <Icon>
-          <b>FC</b>
-        </Icon>
+      <Link href="/">
+        <a>
+          <Icon>
+            <b>FC</b>
+          </Icon>
+        </a>
       </Link>
       <Title>
         <b>Welcome to Freedom Cafe</b> a decentrilized web chat based on freedom
         & privacy.
       </Title>
     </Header>
-    <Link to="/login">
-      <Button>Login</Button>
+    <Link href="/login">
+      <a>
+        <Button>Login</Button>
+      </a>
     </Link>
-    <Link to="/register">
-      <Button>Register</Button>
+    <Link href="/register">
+      <a>
+        <Button>Register</Button>
+      </a>
     </Link>
     <Hr />
-    <Link to="/chat">
-      <Button>Chat as a guest</Button>
+    <Link href="/chat">
+      <a>
+        <Button>Chat as a guest</Button>
+      </a>
     </Link>
     <Copyright />
   </Main>

@@ -2,12 +2,15 @@ import React, { useState, useContext } from "react"
 import { GunContext } from "../../templates/DefaultLayout/GunContext"
 import { Copyright, FloatingTag } from "../shared"
 import styled from "styled-components"
-import { Link, navigate } from "gatsby"
+import { useRouter } from "next/router"
+import Link from "next/link"
 
 const RegisterPage = () => {
   const [form, setForm] = useState({ name: "", password: "" })
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
+
+  const router = useRouter()
 
   const { signup } = useContext(GunContext)
 
@@ -18,7 +21,7 @@ const RegisterPage = () => {
     signup(form.name, form.password)
       .then(() => {
         setLoading(false)
-        navigate("/chat")
+        router.push("/chat")
       })
       .catch(e => {
         console.log(e)
@@ -30,10 +33,12 @@ const RegisterPage = () => {
   return (
     <Main>
       <Header>
-        <Link to="/">
-          <Icon>
-            <b>FC</b>
-          </Icon>
+        <Link href="/">
+          <a>
+            <Icon>
+              <b>FC</b>
+            </Icon>
+          </a>
         </Link>
         <Title>Registration Page</Title>
       </Header>
