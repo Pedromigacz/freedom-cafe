@@ -1,33 +1,73 @@
-import React, { useContext, useState } from "react"
+import React, { useContext, useState, useEffect } from "react"
 import { GunContext } from "../../../templates/DefaultLayout/GunContext"
 import styled from "styled-components"
 import Message from "./Message.jsx"
+import GUN, { SEA } from "gun"
 
 const ChatComponent = () => {
-  const { sendMessage, messages } = useContext(GunContext)
-  const [message, setMessage] = useState("")
+  const [messages, setMessages] = useState([])
+  const [newMessage, setNewMessage] = useState("")
+  const [loading, setLoading] = useState(false)
 
-  const onSubmit = e => {
+  const { user, username } = useContext(GunContext)
+
+  const db = GUN({
+    peers: [
+      "https://gun-manhattan.herokuapp.com/gun",
+      "http://localhost:8000/gun",
+    ],
+  })
+
+  const onSubmit = async e => {
     e.preventDefault()
-    sendMessage(message).then(e => {
-      console.log("sent")
-      setMessage("")
-    })
+    if (loading) return
+    setLoading(true)
+    const secret = await SEA.encrypt(newMessage, "#f00")
+    const message = user.get("all").set({ what: secret })
+    const index = new Date().toISOString()
+    db.get("devChat").get(index).put(message)
+    setNewMessage("")
+    setLoading(false)
   }
+
+  useEffect(() => {
+    db.get("devChat")
+      .map()
+      .once(async (data, id) => {
+        if (data) {
+          const key = "#f00"
+          let message = {
+            who: await db.user(data).get("alias"),
+            what: (await SEA.decrypt(data.what, key)) + "",
+            when: GUN.state.is(data, "what"),
+          }
+          if (message.what) {
+            setMessages(prevMessages =>
+              [...prevMessages, message].sort((a, b) => a.when - b.when)
+            )
+          }
+        }
+      })
+  }, [])
 
   return (
     <ChatWrapper>
       <Chat>
         {messages.map((msg, key) => (
-          <Message message={msg.what} author={msg.who} key={key} />
+          <Message
+            message={msg.what}
+            author={msg.who}
+            key={key}
+            currentlyUser={username}
+          />
         ))}
       </Chat>
       <SendMessageForm onSubmit={onSubmit}>
         <Input
           type="text"
           placeholder="Type a message..."
-          onChange={e => setMessage(e.target.value)}
-          value={message}
+          onChange={e => setNewMessage(e.target.value)}
+          value={newMessage}
         />
         <SendButton type="submit">Send</SendButton>
       </SendMessageForm>
