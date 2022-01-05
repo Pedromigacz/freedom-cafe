@@ -1,13 +1,23 @@
-import * as React from "react"
+import React, { useEffect, useState } from "react"
 import "./reset.css"
 import styled from "styled-components"
 import GunContextProvider from "./GunContext"
 
-const DefaultLayout = ({ children }) => (
-  <ContentContainer>
-    <GunContextProvider>{children}</GunContextProvider>
-  </ContentContainer>
-)
+const DefaultLayout = ({ children }) => {
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    setLoading(false)
+  }, [])
+
+  return loading ? (
+    <div>Loading</div>
+  ) : (
+    <ContentContainer>
+      <GunContextProvider>{children}</GunContextProvider>
+    </ContentContainer>
+  )
+}
 
 const ContentContainer = styled.div`
   display: inline-grid;
